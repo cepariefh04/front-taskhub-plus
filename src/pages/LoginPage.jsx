@@ -1,41 +1,55 @@
 import { useState } from "react";
-import "../Login.css"; // Pastikan file CSS sudah di-import
+import { Link, useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const navigate = useNavigate();
+
+  const tanggalHariIni = new Date().toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Validasi Sederhana
     if (!email || !password) {
-      setError("Email dan Password wajib diisi");
+      setError("Email dan password wajib diisi");
       return;
     }
 
-    if (password.length < 8) {
-      setError("Password minimal harus 8 karakter");
-      return;
-    }
-
+    setLoading(true);
     setError("");
-    console.log("Login attempt with:", { email, password });
-    // Di sini Anda akan memanggil API login nantinya
+
+    try {
+      const response = await api.post("/login", { email, password });
+      localStorage.setItem("token", response.data.access_token);
+
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.response?.data?.message || "Login gagal, coba lagi");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2>TaskHub Login</h2>
-
+        <p className="tanggal">{tanggalHariIni}</p>
+        <h2>TaskHub+ Login</h2>
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label>Email</label>
             <input
               type="email"
-              placeholder="Masukkan email Anda"
+              placeholder="Masukkan email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -51,16 +65,14 @@ const LoginPage = () => {
             />
           </div>
 
-          {error && <p style={{ color: "red", fontSize: "13px" }}>{error}</p>}
-
-          <button type="submit" className="btn-login">
-            Masuk
+          {error && <p className="error-msg">{error}</p>}
+          <button type="submit" className="btn-login" disabled={loading}>
+            {loading ? "Memproses..." : "Masuk"}
           </button>
         </form>
-
         <div className="auth-footer">
           <p>
-            Belum punya akun? <a href="/register">Daftar Sekarang</a>
+            Belum punya akun? <Link to="/register">Daftar Sekarang</Link>
           </p>
         </div>
       </div>

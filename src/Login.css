@@ -1,0 +1,76 @@
+:root {
+  --navy-primary: #000080;
+  --navy-dark: #00005d;
+  --light-gray: #f4f7f6;
+  --white: #ffffff;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--light-gray);
+}
+
+.login-card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-card h2 {
+  color: var(--navy-primary);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Penting agar padding tidak merusak lebar */
+}
+
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--navy-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: var(--navy-dark);
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+.auth-footer a {
+  color: var(--navy-primary);
+  text-decoration: none;
+  font-weight: bold;
+}

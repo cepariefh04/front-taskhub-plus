@@ -1,9 +1,3 @@
-:root {
-  --navy-primary: #000080;
-  --navy-dark: #00005d;
-  --light-gray: #f4f7f6;
-  --white: #ffffff;
-}
 /* Layout utama — tengah layar */
 .login-container {
   min-height: 100vh;
